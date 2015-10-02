@@ -1,23 +1,17 @@
 package com.rsc.cliboard;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 
 public class ClipboardFileSender {
 
-	private Clipboard clipboard;
+	private CliboradHelper clipHelper;
 	private Base64Part bas64part;
 	
-	public ClipboardFileSender(Clipboard clipboard, Base64Part bas64part) {
-		this.clipboard = clipboard;
+	public ClipboardFileSender(CliboradHelper clipHelper, Base64Part bas64part) {
+		this.clipHelper = clipHelper;
 		this.bas64part = bas64part;
 	}
 	
-	public void sendFile(boolean start, String id) {
+	public void sendFile(String id) {
 		Logger.log("Start send file");
 		String b64Part = bas64part.getPart();
 		StringBuilder msg = new StringBuilder();
@@ -30,6 +24,6 @@ public class ClipboardFileSender {
 		msg.append(b64Part);
 			
 			
-		clipboard.setContents(new StringSelection(msg.toString()), null);
+		clipHelper.writeToCliboard(msg.toString());
 	}
 }

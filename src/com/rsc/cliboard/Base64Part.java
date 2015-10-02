@@ -1,5 +1,10 @@
 package com.rsc.cliboard;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 public class Base64Part {
 
 	private String b64;
@@ -27,6 +32,15 @@ public class Base64Part {
 		} else {
 			b64Part = b64.substring(begin, end);
 		}
+		
+//		try {
+//			String aa = part + "|" + b64Part + "\n";
+//			Files.write(Paths.get("c:\\before64.txt"), aa.getBytes(), StandardOpenOption.APPEND);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		part++;
 		return b64Part;
 	}

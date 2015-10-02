@@ -1,10 +1,12 @@
 package com.rsc.cliboard;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 
 
 public class Main2 {
@@ -16,8 +18,9 @@ public class Main2 {
 		Clipboard clipboard = toolkit.getSystemClipboard();
 //		String result = (String) clipboard.getData(DataFlavor.stringFlavor);
 //		System.out.println("String from Clipboard:" + result);
+		CliboradHelper helper = new CliboradHelper(clipboard);
 		CliboardParser parser = new CliboardParser();
-		ClipboardSender sender =  new ClipboardSender(clipboard);
+		ClipboardSender sender =  new ClipboardSender(helper);
 		ClipboardFileSender fileSender = null;
 		CliboardFileReader fileReader = new CliboardFileReader();
 		
@@ -34,12 +37,13 @@ public class Main2 {
 				}
 				byte[] arr = FileUtil.read(new File(file));
 				String b64 = FileUtil.base64Decode(arr);
+				//Files.write(Paths.get("c:\\before64.txt"), b64.getBytes());
 				Base64Part base64Part = new Base64Part(b64, 10000); 
-				fileSender = new ClipboardFileSender(clipboard, base64Part);
+				fileSender = new ClipboardFileSender(helper, base64Part);
 			}
 		}
 		
-		ClipboardListener listener = new ClipboardListener(parser, sender, fileSender, fileReader);
+		ClipboardListener listener = new ClipboardListener(helper, parser, sender, fileSender, fileReader);
 		Thread thread =  new Thread(listener);
 		thread.run();
 	}

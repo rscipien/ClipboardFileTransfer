@@ -1,18 +1,21 @@
 package com.rsc.cliboard;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 
 public class ClipboardSender {
 
-	private Clipboard clipboard;
+	private CliboradHelper clipHelper;
 	
-	public ClipboardSender(Clipboard clipboard) {
-		this.clipboard = clipboard;
+	public ClipboardSender(CliboradHelper clipHelper) {
+		this.clipHelper = clipHelper;
 	}
 	
 	public void acceptTansmision(String id) {
-		clipboard.setContents(new StringSelection(ClipboardHeders.TRANSMISION_ACK + id), null);
+		clipHelper.writeToCliboard(ClipboardHeders.TRANSMISION_ACK + id);
 		Logger.log("Send: " + ClipboardHeders.TRANSMISION_ACK); 
+	}
+	
+	public void endTansmision() {
+		clipHelper.writeToCliboard("");
+		Logger.log("End Transmision"); 
 	}
 }

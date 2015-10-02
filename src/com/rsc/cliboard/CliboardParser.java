@@ -1,7 +1,5 @@
 package com.rsc.cliboard;
 
-import java.awt.datatransfer.DataFlavor;
-
 public class CliboardParser {
 
 	

@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -58,12 +60,22 @@ public class FileUtil {
 	
 	
 	public static String base64Decode(byte[] arr) {
-		 String b64 = DatatypeConverter.printBase64Binary(arr);
-		 return b64;
+		//String b64 = DatatypeConverter.printBase64Binary(arr);
+		BASE64Encoder encoder = new BASE64Encoder();
+		String b64 = encoder.encodeBuffer(arr);
+		return b64;
 	}
 	
 	public static byte[] base64Encode(String base64) {
-		 byte[] arr = DatatypeConverter.parseBase64Binary(base64);
-		 return arr;
+		//byte[] arr = DatatypeConverter.parseBase64Binary(base64);
+		BASE64Decoder decoder = new BASE64Decoder();
+		byte[] arr = null;
+		try {
+			arr = decoder.decodeBuffer(base64);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return arr;
 	}
 }
