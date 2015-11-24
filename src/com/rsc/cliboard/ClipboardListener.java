@@ -50,10 +50,10 @@ public class ClipboardListener implements Runnable {
 				sender.endTansmision();
 				file = false;
 			} else {
-				Logger.log("Brak Akcji");
+				//Logger.log("Brak Akcji");
 				try {
 					if (file) 
-						Thread.sleep(100); 
+						Thread.sleep(10); 
 					else
 						Thread.sleep(1000);
 				} catch (InterruptedException e) {

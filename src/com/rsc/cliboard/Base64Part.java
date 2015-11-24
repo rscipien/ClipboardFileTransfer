@@ -21,7 +21,7 @@ public class Base64Part {
 		if (b64 == null)
 			return "";
 		
-		Logger.log("" + (float)(part * FileUtil.MAX_LENGTH_B64)/b64.length());
+		Logger.log("" + (float)(part * partsize)/b64.length());
 		String b64Part = "";
 		int begin = part * partsize;
 		int end = begin + partsize;

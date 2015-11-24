@@ -33,12 +33,12 @@ public class Main2 {
 				System.out.println(file);
 				File fileToTransfer = new File(file);
 				if (!fileToTransfer.exists()) {
-					Logger.log("Plik nie istnieje");
+					Logger.log("File doesn't exists");
 				}
 				byte[] arr = FileUtil.read(new File(file));
 				String b64 = FileUtil.base64Decode(arr);
 				//Files.write(Paths.get("c:\\before64.txt"), b64.getBytes());
-				Base64Part base64Part = new Base64Part(b64, 10000); 
+				Base64Part base64Part = new Base64Part(b64, 1000000); 
 				fileSender = new ClipboardFileSender(helper, base64Part);
 			}
 		}

@@ -20,7 +20,7 @@ public class CliboradHelper {
 				respons = read();
 				if (!respons.isValid()) {
 					Logger.log("Sprobuj jeszcze raz pobrac");
-					Thread.sleep(100);
+					Thread.sleep(10);
 				} else {
 					ret = respons.getContent();
 					//Logger.log("Content " + ret);
