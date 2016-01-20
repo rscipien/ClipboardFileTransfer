@@ -4,15 +4,15 @@ import java.util.UUID;
 
 public class ClipboardListener implements Runnable {
 
-	private CliboradHelper helper;
-	private CliboardParser parser;
+	private ClipboradHelper helper;
+	private ClipboardParser parser;
 	private ClipboardSender sender;
 	private ClipboardFileSender fileSender;
-	private CliboardFileReader fileReader;
+	private ClipboardFileReader fileReader;
 	private String id = UUID.randomUUID().toString();
 	private boolean file = false;
 	
-	public ClipboardListener(CliboradHelper helper, CliboardParser parser, ClipboardSender sender, ClipboardFileSender fileSender, CliboardFileReader fileReader) {
+	public ClipboardListener(ClipboradHelper helper, ClipboardParser parser, ClipboardSender sender, ClipboardFileSender fileSender, ClipboardFileReader fileReader) {
 		this.helper = helper;
 		this.parser = parser;
 		this.sender = sender;
@@ -21,15 +21,15 @@ public class ClipboardListener implements Runnable {
 		if (fileSender != null)
 			fileSender.sendFile(id);
 		else
-			Logger.log("sender jest nullem");
+			Logger.log("sender is nullem");
 	}
 	
 	@Override
 	public void run() {
-		Logger.log("Start Listening cliboard");
+		Logger.log("Start Listening clipboard");
 		while (true) {
 			String content = helper.getCliboarContent();
-			if(parser.checkIfMeaasgeArrived(content, id)) {
+			if(parser.checkIfMessageArrived(content, id)) {
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_START);
 				sender.acceptTansmision(id);
 			} else if (parser.checkIfMessageAccepted(content, id)) {
@@ -46,7 +46,8 @@ public class ClipboardListener implements Runnable {
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART_END);
 				String b64 = parser.getBase64(content);
 				fileReader.addPart(b64);
-				fileReader.createFile();
+				byte[] arr = fileReader.mergeAndCovert();
+				FileUtil.writeToFile(arr);
 				sender.endTansmision();
 				file = false;
 			} else {

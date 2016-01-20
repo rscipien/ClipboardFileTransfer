@@ -1,6 +1,6 @@
 package com.rsc.cliboard;
 
-public class CliboardParser {
+public class ClipboardParser {
 
 	
 	public boolean diffId(String content, String id) {
@@ -17,7 +17,7 @@ public class CliboardParser {
 		return arr[3];
 	}
 	
-	public boolean checkIfMeaasgeArrived(String content, String id) {
+	public boolean checkIfMessageArrived(String content, String id) {
 		if (content.startsWith(ClipboardHeders.TRANSMISION_START)) {
 			return diffId(content, id);
 		} else {

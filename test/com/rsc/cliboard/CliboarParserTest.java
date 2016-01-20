@@ -9,7 +9,7 @@ public class CliboarParserTest {
 	public void diffIdTest() {
 		String id = "1111";
 		String content = ClipboardHeders.TRANSMISION_FILE + id;
-		CliboardParser parser = new CliboardParser();
+		ClipboardParser parser = new ClipboardParser();
 		assertEquals(false, parser.diffId(content, id));
 	}
 	
@@ -18,7 +18,7 @@ public class CliboarParserTest {
 		String id = "1111";
 		String id2 = "2222";
 		String content = ClipboardHeders.TRANSMISION_FILE + id;
-		CliboardParser parser = new CliboardParser();
+		ClipboardParser parser = new ClipboardParser();
 		assertEquals(true, parser.diffId(content, id2));
 	}
 }

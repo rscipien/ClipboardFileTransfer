@@ -4,17 +4,17 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 
-public class CliboradHelper {
+public class ClipboradHelper {
 	
 	private Clipboard clipboard;
 	
-	public CliboradHelper(Clipboard clipboard) {
+	public ClipboradHelper(Clipboard clipboard) {
 		this.clipboard = clipboard;
 	}
 	
 	public String getCliboarContent() {
 		String ret = "";
-		CliboardRespons respons = null;
+		ClipboardRespons respons = null;
 		try {
 			do {
 				respons = read();
@@ -38,12 +38,12 @@ public class CliboradHelper {
 	}
 	
 	public void writeToCliboard(String value) {
-		CliboardRespons respons = null;
+		ClipboardRespons respons = null;
 		try {
 			do {
 				respons = write(value);
 				if (!respons.isValid()) {
-					Logger.log("Sprobuj jeszcze raz zapisac");
+					Logger.log("Try again Clipboard locked");
 					Thread.sleep(10);
 				}
 			} while (!respons.isValid());
@@ -52,8 +52,8 @@ public class CliboradHelper {
 		}
 	}
 	
-	public CliboardRespons read() {
-		CliboardRespons res = new CliboardRespons();
+	public ClipboardRespons read() {
+		ClipboardRespons res = new ClipboardRespons();
 		try {
 			String bRet = (String) clipboard.getData(DataFlavor.stringFlavor);
 			res.setContent(bRet);
@@ -64,8 +64,8 @@ public class CliboradHelper {
 		return res;
 	}
 	
-	public CliboardRespons write(String value) {
-		CliboardRespons res = new CliboardRespons();
+	public ClipboardRespons write(String value) {
+		ClipboardRespons res = new ClipboardRespons();
 		try {
 			clipboard.setContents(new StringSelection(value), null);
 			res.setValid(true);

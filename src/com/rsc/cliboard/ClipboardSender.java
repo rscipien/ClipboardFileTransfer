@@ -3,9 +3,9 @@ package com.rsc.cliboard;
 
 public class ClipboardSender {
 
-	private CliboradHelper clipHelper;
+	private ClipboradHelper clipHelper;
 	
-	public ClipboardSender(CliboradHelper clipHelper) {
+	public ClipboardSender(ClipboradHelper clipHelper) {
 		this.clipHelper = clipHelper;
 	}
 	

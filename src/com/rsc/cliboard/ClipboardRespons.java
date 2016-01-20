@@ -1,6 +1,6 @@
 package com.rsc.cliboard;
 
-public class CliboardRespons {
+public class ClipboardRespons {
 	private boolean valid;
 	private String content;
 	public boolean isValid() {

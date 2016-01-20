@@ -18,11 +18,11 @@ public class Main {
 		Clipboard clipboard = toolkit.getSystemClipboard();
 //		String result = (String) clipboard.getData(DataFlavor.stringFlavor);
 //		System.out.println("String from Clipboard:" + result);
-		CliboradHelper helper = new CliboradHelper(clipboard);
-		CliboardParser parser = new CliboardParser();
+		ClipboradHelper helper = new ClipboradHelper(clipboard);
+		ClipboardParser parser = new ClipboardParser();
 		ClipboardSender sender =  new ClipboardSender(helper);
 		ClipboardFileSender fileSender = null;
-		CliboardFileReader fileReader = new CliboardFileReader();
+		ClipboardFileReader fileReader = new ClipboardFileReader();
 		
 		
 		for (int i = 0; i < args.length; i++) {
