@@ -20,8 +20,5 @@ Certutil is avaliable from Windows Server 2003
 ```sh
 certutil -decode base64.txt CFT.jar
 ```
-Linux
-```sh
-base64 -d FILE 
-```
+
 
