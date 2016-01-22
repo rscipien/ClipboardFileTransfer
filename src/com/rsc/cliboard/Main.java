@@ -37,9 +37,12 @@ public class Main {
 				}
 				byte[] arr = FileUtil.read(new File(file));
 				String b64 = FileUtil.base64Decode(arr);
-				//Files.write(Paths.get("c:\\before64.txt"), b64.getBytes());
+//				FileUtil.writeToFile(b64.getBytes(), ".\\base64.txt");
 				Base64Part base64Part = new Base64Part(b64, 1000000); 
 				fileSender = new ClipboardFileSender(helper, base64Part);
+			} else if (arg.equals("-o")) {
+				String outFile = args[++i];
+				fileReader.setFileLocation(outFile);
 			}
 		}
 		

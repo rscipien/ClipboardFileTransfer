@@ -44,10 +44,9 @@ public class FileUtil {
 		    return ous.toByteArray();
 	}
 	
-	public static void writeToFile(byte[] arr) {
-		String strFilePath = "C://demo.zip";
+	public static void writeToFile(byte[] arr, String fileName) {
 	    try {
-	      FileOutputStream fos = new FileOutputStream(strFilePath);
+	      FileOutputStream fos = new FileOutputStream(fileName);
 	      fos.write(arr);
 	      fos.close();
 	     

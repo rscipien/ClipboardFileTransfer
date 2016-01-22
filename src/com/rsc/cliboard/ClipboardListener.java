@@ -18,10 +18,12 @@ public class ClipboardListener implements Runnable {
 		this.sender = sender;
 		this.fileSender = fileSender;
 		this.fileReader = fileReader;
-		if (fileSender != null)
+		if (fileSender != null) {
 			fileSender.sendFile(id);
-		else
-			Logger.log("sender is nullem");
+			Logger.log("Send Mode");
+		} else {
+			Logger.log("Listen Mode");
+		}
 	}
 	
 	@Override
@@ -47,7 +49,7 @@ public class ClipboardListener implements Runnable {
 				String b64 = parser.getBase64(content);
 				fileReader.addPart(b64);
 				byte[] arr = fileReader.mergeAndCovert();
-				FileUtil.writeToFile(arr);
+				FileUtil.writeToFile(arr, fileReader.getOutFile());
 				sender.endTansmision();
 				file = false;
 			} else {
