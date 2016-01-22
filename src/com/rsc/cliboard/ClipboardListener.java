@@ -10,7 +10,8 @@ public class ClipboardListener implements Runnable {
 	private ClipboardFileSender fileSender;
 	private ClipboardFileReader fileReader;
 	private String id = UUID.randomUUID().toString();
-	private boolean file = false;
+	// if nothing is send or receiver sleep for 1 second 
+	private boolean standBy = true;
 	
 	public ClipboardListener(ClipboradHelper helper, ClipboardParser parser, ClipboardSender sender, ClipboardFileSender fileSender, ClipboardFileReader fileReader) {
 		this.helper = helper;
@@ -20,7 +21,6 @@ public class ClipboardListener implements Runnable {
 		this.fileReader = fileReader;
 		if (fileSender != null) {
 			fileSender.sendFile(id);
-			Logger.log("Send Mode");
 		} else {
 			Logger.log("Listen Mode");
 		}
@@ -37,13 +37,13 @@ public class ClipboardListener implements Runnable {
 			} else if (parser.checkIfMessageAccepted(content, id)) {
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_ACK);
 				fileSender.sendFile(id);
-				file = true;
+				standBy = false;
 			} else if (parser.checkIfFileArrived(content, id)) {
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART);
 				String b64 = parser.getBase64(content);
 				fileReader.addPart(b64);
 				sender.acceptTansmision(id);
-				file = true;
+				standBy = false;
 			} else if (parser.checkIfEndOfFile(content, id)) {
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART_END);
 				String b64 = parser.getBase64(content);
@@ -51,14 +51,12 @@ public class ClipboardListener implements Runnable {
 				byte[] arr = fileReader.mergeAndCovert();
 				FileUtil.writeToFile(arr, fileReader.getOutFile());
 				sender.endTansmision();
-				file = false;
+				standBy = true;
 			} else {
 				//Logger.log("Brak Akcji");
 				try {
-					if (file) 
-						Thread.sleep(10); 
-					else
-						Thread.sleep(1000);
+					if (standBy) 
+						Thread.sleep(1000); 
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
