@@ -39,6 +39,18 @@ public class CliboarParserTest {
 	
 	
 	@Test
+	public void getBase64NoContentTest() {
+		String myId = "1111";
+		//String remoteId = "2222";
+		String content = "";
+		String msg = ClipboardHeders.TRANSMISION_FILE + myId + "|"; 
+		ClipboardParser parser = new ClipboardParser();
+		String resp = parser.getBase64(msg);
+		
+		assertEquals(content, resp);
+	}
+	
+	@Test
 	public void messageArrivedTest() {
 		String myId = "1111";
 		String remoteId = "2222";
