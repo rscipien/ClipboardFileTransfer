@@ -29,34 +29,49 @@ public class ClipboardListener implements Runnable {
 	@Override
 	public void run() {
 		Logger.log("Start Listening clipboard");
+		int doNothinCount = 0;
 		while (true) {
 			String content = helper.getCliboarContent();
 			if(parser.checkIfMessageArrived(content, id)) {
+				long startTime = System.currentTimeMillis();
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_START);
 				sender.acceptTansmision(id);
+				long endTime = System.currentTimeMillis();
+				Logger.log("Message arrived time(ms): " + (endTime - startTime) + " Do notinh count: " + doNothinCount);
+				doNothinCount = 0;
 			} else if (parser.checkIfMessageAccepted(content, id)) {
+				long startTime = System.currentTimeMillis();
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_ACK);
 				fileSender.sendFile(id);
+				long endTime = System.currentTimeMillis();
+				Logger.log("Message accepted time(ms): " + (endTime - startTime) + " Do notinh count: " + doNothinCount);
+				doNothinCount = 0;
 				standBy = false;
 			} else if (parser.checkIfFileArrived(content, id)) {
+				long startTime = System.currentTimeMillis();
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART);
 				String b64 = parser.getBase64(content);
 				fileReader.addPart(b64);
 				sender.acceptTansmision(id);
+				long endTime = System.currentTimeMillis();
+				Logger.log("Part file arrived time(ms): " + (endTime - startTime) + " Do notinh count: " + doNothinCount);
+				doNothinCount = 0;
 				standBy = false;
 			} else if (parser.checkIfEndOfFile(content, id)) {
-				Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART_END);
+				Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART_END + content);
 				String b64 = parser.getBase64(content);
 				fileReader.addPart(b64);
-				byte[] arr = fileReader.mergeAndCovert();
-				FileUtil.writeToFile(arr, fileReader.getOutFile());
+				fileReader.createFile();
 				sender.endTansmision();
 				standBy = true;
+				return;
 			} else {
-				//Logger.log("Brak Akcji");
+				doNothinCount++;
 				try {
 					if (standBy) 
 						Thread.sleep(1000); 
+					else 
+						Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

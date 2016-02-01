@@ -28,7 +28,6 @@ public class ClipboradHelper {
 				
 				
 			} while (!respons.isValid());
-			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
