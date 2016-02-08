@@ -1,7 +1,5 @@
 package com.rsc.clipboard;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.io.BufferedOutputStream;
 import java.io.File;
 
@@ -10,7 +8,6 @@ import org.junit.Test;
 import com.rsc.clipboard.ClipboardFileReader;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 public class ClipboardFileReaderTest {

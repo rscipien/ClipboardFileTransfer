@@ -6,7 +6,6 @@ import java.io.IOException;
 
 
 public class ClipboardFileReader {
-	private StringBuilder fileBase64Content = new StringBuilder();
 	private String fileLocation = "";
 	private String defaultFile = "." + File.separator + "out";
 	private BufferedOutputStream bos;

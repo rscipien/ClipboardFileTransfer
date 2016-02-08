@@ -2,12 +2,10 @@ package com.rsc.clipboard;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
-import org.mockito.internal.matchers.Any;
 
 import com.rsc.clipboard.Base64Part;
 import com.rsc.clipboard.FileUtil;
