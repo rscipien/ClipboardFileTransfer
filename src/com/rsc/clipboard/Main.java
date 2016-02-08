@@ -1,4 +1,4 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.UnsupportedFlavorException;

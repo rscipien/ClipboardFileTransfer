@@ -1,6 +1,9 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 
 import org.junit.Test;
+
+import com.rsc.clipboard.ClipboardHeders;
+import com.rsc.clipboard.ClipboardParser;
 
 import static org.junit.Assert.*;
 

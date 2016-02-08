@@ -1,4 +1,4 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 
 public class ClipboardHeders {
 	public static final String TRANSMISION_FILE = "|TRANSMISION_FILE|";

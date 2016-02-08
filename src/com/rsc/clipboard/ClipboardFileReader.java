@@ -1,4 +1,4 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

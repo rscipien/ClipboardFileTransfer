@@ -1,4 +1,4 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 
 import java.io.BufferedInputStream;
 import java.util.Arrays;

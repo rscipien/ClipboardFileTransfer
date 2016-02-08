@@ -1,4 +1,4 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -8,6 +8,9 @@ import java.io.InputStream;
 
 import org.junit.Test;
 import org.mockito.internal.matchers.Any;
+
+import com.rsc.clipboard.Base64Part;
+import com.rsc.clipboard.FileUtil;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

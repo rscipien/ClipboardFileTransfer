@@ -1,4 +1,4 @@
-package com.rsc.cliboard;
+package com.rsc.clipboard;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
+
+import com.rsc.clipboard.ClipboardRespons;
+import com.rsc.clipboard.ClipboradHelper;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
