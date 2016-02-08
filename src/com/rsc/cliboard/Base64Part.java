@@ -29,21 +29,13 @@ public class Base64Part {
 			} else if (n < partsize) {
 				buffor = Arrays.copyOfRange(buffor, 0, n);
 				b64 = FileUtil.base64Decode(buffor);
-			} else {
-				System.out.println("!!!!!!!!!!!!!!!!!!!!! A TO CO !!!!!!!!!!!!!!!!!!!");
-			}
+				endString = true;
+			} 
+			
 		} catch (Exception e) {
 			System.out.println("OFFSET " + part * buffor.length);
 			e.printStackTrace();
 		}
-		//Logger.log("" + (float)(part * partsize)/b64.length());
-//		try {
-//			String aa = part + "|" + b64Part + "\n";
-//			Files.write(Paths.get("c:\\before64.txt"), aa.getBytes(), StandardOpenOption.APPEND);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 		part++;
 		return b64;
