@@ -20,7 +20,8 @@ public class ClipboardListener implements Runnable {
 		this.fileSender = fileSender;
 		this.fileReader = fileReader;
 		if (fileSender != null) {
-			fileSender.sendFile(id);
+			String msg = fileSender.prepareFilePart(id);
+			helper.writeToCliboard(msg);
 		} else {
 			Logger.log("Listen Mode");
 		}
@@ -45,7 +46,8 @@ public class ClipboardListener implements Runnable {
 				long startTime = System.currentTimeMillis();
 				Logger.log("Read: " + ClipboardHeders.TRANSMISION_ACK);
 				
-				fileSender.sendFile(id);
+				String msg = fileSender.prepareFilePart(id);
+				helper.writeToCliboard(msg);
 				
 				long endTime = System.currentTimeMillis();
 				Logger.log("Message accepted time(ms): " + (endTime - startTime) + " Do notinhg count: " + doNothingCount);

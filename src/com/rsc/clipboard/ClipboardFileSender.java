@@ -3,15 +3,13 @@ package com.rsc.clipboard;
 
 public class ClipboardFileSender {
 
-	private ClipboradHelper clipHelper;
 	private Base64Part base64part;
 	
-	public ClipboardFileSender(ClipboradHelper clipHelper, Base64Part base64part) {
-		this.clipHelper = clipHelper;
+	public ClipboardFileSender(Base64Part base64part) {
 		this.base64part = base64part;
 	}
 	
-	public void sendFile(String id) {
+	public String prepareFilePart(String id) {
 		Logger.log("Start send file");
 		String b64Part = base64part.getPart();
 		StringBuilder msg = new StringBuilder();
@@ -24,6 +22,6 @@ public class ClipboardFileSender {
 		msg.append(b64Part);
 			
 			
-		clipHelper.writeToCliboard(msg.toString());
+		return msg.toString();
 	}
 }

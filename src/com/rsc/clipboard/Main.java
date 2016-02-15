@@ -49,7 +49,7 @@ public class Main {
 				FileInputStream fis  = new FileInputStream(new File(file));
 				BufferedInputStream bis = new BufferedInputStream(fis);
 				Base64Part base64Part = new Base64Part(bis, 1024*50); 
-				fileSender = new ClipboardFileSender(helper, base64Part);
+				fileSender = new ClipboardFileSender(base64Part);
 			} else if (arg.equals("-o")) {
 					//String outFile = args[++i];
 					//fileReader.setFileLocation(outFile);
