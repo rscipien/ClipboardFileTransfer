@@ -59,7 +59,8 @@ public class Main {
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("out"));
 		fileReader = new ClipboardFileReader(bos);
 		
-		ClipboardListener listener = new ClipboardListener(helper, parser, sender, fileSender, fileReader);
+		ClipboardMessageHandler messageHandler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser);
+		ClipboardListener listener = new ClipboardListener(messageHandler, helper);
 		Thread thread =  new Thread(listener);
 		thread.run();
 	}
