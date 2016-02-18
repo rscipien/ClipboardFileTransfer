@@ -22,6 +22,7 @@ public class ClipboardMessageHandlerTest {
 		
 		verify(sender).acceptTansmision(anyString());
 		assertTrue(handled);
+		assertFalse(handler.isStandBy());
 	}
 	
 	@Test
@@ -36,6 +37,7 @@ public class ClipboardMessageHandlerTest {
 		
 		verify(fileSender).prepareFilePart(anyString());
 		assertTrue(handled);
+		assertFalse(handler.isStandBy());
 	}
 
 	
@@ -53,6 +55,7 @@ public class ClipboardMessageHandlerTest {
 		
 		verify(fileReader).addPart(anyString());
 		assertTrue(handled);
+		assertFalse(handler.isStandBy());
 	}
 	
 	@Test
@@ -69,6 +72,8 @@ public class ClipboardMessageHandlerTest {
 		
 		verify(fileReader).createFile();
 		assertTrue(handled);
+		assertTrue(handler.isEndListening());
+		assertTrue(handler.isStandBy());
 	}
 
 	@Test

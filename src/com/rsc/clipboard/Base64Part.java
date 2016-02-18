@@ -10,12 +10,14 @@ public class Base64Part {
 	private int partsize;
 	private boolean endString;
 	byte[] buffor;
+	private FileUtil fileUtil;
 	
-	public Base64Part(BufferedInputStream bis, int partSize) {
+	public Base64Part(BufferedInputStream bis, int partSize, FileUtil fileUtil) {
 		Logger.log("Part size: " + partSize / 1014 + " kb");
 		this.bis = bis;
 		this.partsize = partSize;
 		this.buffor = new byte[partSize];
+		this.fileUtil = fileUtil;
 	}
 	
 	public String getPart() {
@@ -25,10 +27,10 @@ public class Base64Part {
 			if (n == -1) {
 				endString = true;
 			} else if (n == partsize) {
-				b64 = FileUtil.base64Decode(buffor);
+				b64 = fileUtil.base64Decode(buffor);
 			} else if (n < partsize) {
 				buffor = Arrays.copyOfRange(buffor, 0, n);
-				b64 = FileUtil.base64Decode(buffor);
+				b64 = fileUtil.base64Decode(buffor);
 				endString = true;
 			} 
 			

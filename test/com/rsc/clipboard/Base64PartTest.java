@@ -19,10 +19,11 @@ public class Base64PartTest {
 
 	@Test
 	public void getPartEndTest() throws IOException {
+		FileUtil fileUtil = mock(FileUtil.class);
 		BufferedInputStream bis = mock(BufferedInputStream.class);
 		when(bis.read(any(byte[].class))).thenReturn(-1);
 		
-		Base64Part base64 = new Base64Part(bis, 1024);
+		Base64Part base64 = new Base64Part(bis, 1024, fileUtil);
 		base64.getPart();
 		
 		assertTrue(base64.isEnd());
@@ -30,13 +31,14 @@ public class Base64PartTest {
 	
 	@Test
 	public void getPartEndTest2() throws IOException {
+		FileUtil fileUtil = new FileUtil();
 		InputStream is = new ByteArrayInputStream("test data".getBytes());
 		BufferedInputStream bis = new BufferedInputStream(is);
 		
-		Base64Part base64 = new Base64Part(bis, 5);
-		assertEquals(FileUtil.base64Decode("test ".getBytes()), base64.getPart());
+		Base64Part base64 = new Base64Part(bis, 5, fileUtil);
+		assertEquals(fileUtil.base64Decode("test ".getBytes()), base64.getPart());
 		assertFalse(base64.isEnd());
-		assertEquals(FileUtil.base64Decode("data".getBytes()), base64.getPart());
+		assertEquals(fileUtil.base64Decode("data".getBytes()), base64.getPart());
 		assertTrue(base64.isEnd());
 	}
 	

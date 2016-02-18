@@ -9,13 +9,15 @@ public class ClipboardFileReader {
 	private String fileLocation = "";
 	private String defaultFile = "." + File.separator + "out";
 	private BufferedOutputStream bos;
+	private FileUtil fileUtil;
 	
-	public ClipboardFileReader(BufferedOutputStream bos) {
+	public ClipboardFileReader(BufferedOutputStream bos, FileUtil fileUtil) {
 		this.bos = bos;
+		this.fileUtil = fileUtil;
 	}
 	
 	public void addPart(String part) {
-		byte[] buffor = FileUtil.base64Encode(part);
+		byte[] buffor = fileUtil.base64Encode(part);
 		try {
 			bos.write(buffor);
 			bos.flush();

@@ -1,5 +1,7 @@
 package com.rsc.clipboard;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +19,7 @@ public class FileUtil {
 	public static final int MAX_LENGTH = 4096;
 	public static final int MAX_LENGTH_B64 = 10000;
 	
-	public static byte[] read(File file) throws IOException {
+	public byte[] read(File file) throws IOException {
 		
 		    ByteArrayOutputStream ous = null;
 		    InputStream ios = null;
@@ -45,7 +47,7 @@ public class FileUtil {
 		    return ous.toByteArray();
 	}
 	
-	public static void writeToFile(byte[] arr, String fileName) {
+	public void writeToFile(byte[] arr, String fileName) {
 	    try {
 	      FileOutputStream fos = new FileOutputStream(fileName);
 	      fos.write(arr);
@@ -58,8 +60,31 @@ public class FileUtil {
 	     }
 	}
 	
+	public boolean isFileExists(String name) {
+		File fileToTransfer = new File(name);
+		if (!fileToTransfer.exists()) {
+			Logger.log("File doesn't exists");
+			return false;
+		}
+		
+		return true;
+	}
 	
-	public static String base64Decode(byte[] arr) {
+	public BufferedInputStream prepareBufferedInputStream(String file) throws FileNotFoundException {
+		BufferedInputStream bis = null;
+		if (isFileExists(file)) {
+			FileInputStream fis  = new FileInputStream(new File(file));
+			bis = new BufferedInputStream(fis);
+		}
+		
+		return bis;
+	}
+	
+	public BufferedOutputStream prepareBufferedOutputStream() throws FileNotFoundException {
+		return new BufferedOutputStream(new FileOutputStream("out"));
+	} 
+	
+	public String base64Decode(byte[] arr) {
 		//String b64 = DatatypeConverter.printBase64Binary(arr);
 		long startTime = System.currentTimeMillis();
 		BASE64Encoder encoder = new BASE64Encoder();
@@ -69,7 +94,7 @@ public class FileUtil {
 		return b64;
 	}
 	
-	public static byte[] base64Encode(String base64) {
+	public byte[] base64Encode(String base64) {
 		//byte[] arr = DatatypeConverter.parseBase64Binary(base64);
 		long startTime = System.currentTimeMillis();
 		BASE64Decoder decoder = new BASE64Decoder();

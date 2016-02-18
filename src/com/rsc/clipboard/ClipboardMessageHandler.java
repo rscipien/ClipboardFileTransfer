@@ -87,14 +87,9 @@ public class ClipboardMessageHandler {
 	public boolean isStandBy() {
 		return standBy;
 	}
-	public void setStandBy(boolean standBy) {
-		this.standBy = standBy;
-	}
+
 	public boolean isEndListening() {
 		return endListening;
-	}
-	public void setEndListening(boolean endListening) {
-		this.endListening = endListening;
 	}
 	
 }
