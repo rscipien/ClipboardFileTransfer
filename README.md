@@ -9,7 +9,7 @@ java -jar CFT.jar -f file_to_send
 and other will wait for file part.
 
 ```sh
-java -jar CFT.jar
+java -jar CFT.jar //Create out file in current directory
 ```
 
 If sender get information that first part was consumed it will send next part.
