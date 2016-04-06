@@ -1,13 +1,6 @@
 package com.rsc.clipboard;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 public class Main {
@@ -18,8 +11,6 @@ public class Main {
 		ClipboradHelper helper = new ClipboradHelper(clipboard);
 		ClipboardParser parser = new ClipboardParser();
 		ClipboardSender sender =  new ClipboardSender(helper);
-		ClipboardFileSender fileSender = null;
-		ClipboardFileReader fileReader = null;
 		
 		FileUtil fileUtil = new FileUtil();
 		CommandLineParams cmd = new CommandLineParams(args, fileUtil);
