@@ -6,6 +6,7 @@ public class ClipboardMessageHandler {
 	private ClipboardFileReader fileReader;
 	private ClipboardSender sender;
 	private ClipboardParser parser;
+	private HashGenerator generator;
 	private int doNothingCount = 0;
 	// if nothing is send or receiver sleep for 1 second
 	private boolean standBy;
@@ -13,12 +14,13 @@ public class ClipboardMessageHandler {
 	
 	public ClipboardMessageHandler(ClipboradHelper helper, ClipboardFileSender fileSender,
 			ClipboardFileReader fileReader, ClipboardSender sender,
-			ClipboardParser parser) {
+			ClipboardParser parser, HashGenerator generator) {
 		this.helper = helper;
 		this.fileSender = fileSender;
 		this.fileReader = fileReader;
 		this.sender = sender;
 		this.parser = parser;
+		this.generator = generator;
 	}
 
 
@@ -33,7 +35,7 @@ public class ClipboardMessageHandler {
 			sender.acceptTansmision(id);
 			
 			long endTime = System.currentTimeMillis();
-			Logger.log("Message arrived time(ms): " + (endTime - startTime) + " Do notingh count: " + doNothingCount);
+			Logger.info("Message arrived time(ms): " + (endTime - startTime) + " Do notingh count: " + doNothingCount);
 			doNothingCount = 0;
 		} else if (parser.checkIfMessageAccepted(content, id)) {
 			long startTime = System.currentTimeMillis();
@@ -51,6 +53,11 @@ public class ClipboardMessageHandler {
 			Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART);
 			
 			String b64 = parser.getBase64(content);
+			String hash = parser.getPartHash(content);
+			String hashLocal = generator.md5(b64);
+			if (!hash.equals(hashLocal)) {
+				Logger.info("ERROR different hash between server and client");
+			}
 			fileReader.addPart(b64);
 			sender.acceptTansmision(id);
 			
@@ -61,6 +68,11 @@ public class ClipboardMessageHandler {
 		} else if (parser.checkIfEndOfFile(content, id)) {
 			Logger.log("Read: " + ClipboardHeders.TRANSMISION_PART_END);
 			String b64 = parser.getBase64(content);
+			String hash = parser.getPartHash(content);
+			String hashLocal = generator.md5(b64);
+			if (!hash.equals(hashLocal)) {
+				Logger.info("ERROR different hash between server and client part");
+			}
 			
 			fileReader.addPart(b64);
 			fileReader.createFile();
@@ -71,12 +83,16 @@ public class ClipboardMessageHandler {
 			handled = false;
 		}
 		
+		
 		return handled;
 	}
 
 	public boolean startSending(String id) {
 		if (fileSender != null) {
 			String msg = fileSender.prepareFilePart(id);
+			Logger.log("--------------------------");
+			Logger.log(msg);
+			Logger.log("---------------------------");
 			helper.writeToCliboard(msg);
 			return true;
 		}

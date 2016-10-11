@@ -3,9 +3,7 @@ package com.rsc.clipboard;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CommandLineParams {
@@ -56,7 +54,7 @@ public class CommandLineParams {
 				System.out.println(file);
 				BufferedInputStream bis = fileUtil.prepareBufferedInputStream(file);
 				Base64Part base64Part = new Base64Part(bis, 1024*50, fileUtil); 
-				fileSender = new ClipboardFileSender(base64Part);
+				fileSender = new ClipboardFileSender(base64Part, new HashGenerator());
 			}
 		}
 	}

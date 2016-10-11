@@ -11,6 +11,7 @@ public class Main {
 		ClipboradHelper helper = new ClipboradHelper(clipboard);
 		ClipboardParser parser = new ClipboardParser();
 		ClipboardSender sender =  new ClipboardSender(helper);
+		HashGenerator generator = new HashGenerator();
 		
 		FileUtil fileUtil = new FileUtil();
 		CommandLineParams cmd = new CommandLineParams(args, fileUtil);
@@ -25,7 +26,7 @@ public class Main {
 //				BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("out"));
 //				fileReader = new ClipboardFileReader(bos);
 		
-		ClipboardMessageHandler messageHandler = new ClipboardMessageHandler(helper, cmd.getFileSender(), cmd.getFileReader(), sender, parser);
+		ClipboardMessageHandler messageHandler = new ClipboardMessageHandler(helper, cmd.getFileSender(), cmd.getFileReader(), sender, parser, generator);
 		ClipboardListener listener = new ClipboardListener(messageHandler, helper);
 		Thread thread =  new Thread(listener);
 		thread.run();

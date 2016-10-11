@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class CliboarParserTest {
 
 	String fakeHeader = "|FAKE|";
+	String fakeHash = "0034GFdg";
 	
 	@Test
 	public void diffIdTest() {
@@ -33,11 +34,22 @@ public class CliboarParserTest {
 		String myId = "1111";
 		//String remoteId = "2222";
 		String content = "Content";
-		String msg = ClipboardHeders.TRANSMISION_FILE + myId + "|" + content; 
+		String msg = ClipboardHeders.TRANSMISION_FILE + myId + "|" + fakeHash  + "|" + content; 
 		ClipboardParser parser = new ClipboardParser();
 		String resp = parser.getBase64(msg);
 		
 		assertEquals(content, resp);
+	}
+	
+	@Test
+	public void getPartHashTest() {
+		String myId = "1111";
+		String content = "Content";
+		String msg = ClipboardHeders.TRANSMISION_FILE + myId + "|" + fakeHash  + "|" + content; 
+		ClipboardParser parser = new ClipboardParser();
+		String resp = parser.getPartHash(msg);
+		
+		assertEquals(fakeHash, resp);
 	}
 	
 	

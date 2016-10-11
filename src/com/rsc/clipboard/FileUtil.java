@@ -63,7 +63,7 @@ public class FileUtil {
 	public boolean isFileExists(String name) {
 		File fileToTransfer = new File(name);
 		if (!fileToTransfer.exists()) {
-			Logger.log("File doesn't exists");
+			Logger.info("File doesn't exists");
 			return false;
 		}
 		

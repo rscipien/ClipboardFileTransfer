@@ -57,6 +57,7 @@ public class ClipboradHelper {
 		ClipboardRespons res = new ClipboardRespons();
 		try {
 			String bRet = (String) clipboard.getData(DataFlavor.stringFlavor);
+			bRet = bRet.replaceAll("\n", "\r\n");
 			res.setContent(bRet);
 			res.setValid(true);
 		} catch (Exception e) {

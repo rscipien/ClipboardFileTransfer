@@ -14,10 +14,19 @@ public class ClipboardParser {
 	
 	public String getBase64(String content) {
 		String arr [] = content.split("\\|");
-		if (arr.length < 4)
+		if (arr.length < 5)
+			return "";
+		else
+			return arr[4];
+	}
+	
+	public String getPartHash(String content) {
+		String arr [] = content.split("\\|");
+		if (arr.length < 5)
 			return "";
 		else
 			return arr[3];
+
 	}
 	
 	public boolean checkIfMessageArrived(String content, String id) {

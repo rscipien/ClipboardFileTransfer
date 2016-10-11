@@ -12,15 +12,14 @@ public class ClipboardListener implements Runnable {
 	public ClipboardListener(ClipboardMessageHandler messageHandler, ClipboradHelper helper) {
 		this.messageHandler = messageHandler;
 		this.helper = helper;
-		boolean startSend =  messageHandler.startSending(id);
-		if (!startSend) {
+		if (!messageHandler.startSending(id)) {
 			Logger.log("Listen Mode");
 		}
 	}
 	
 	@Override
 	public void run() {
-		Logger.log("Start Listening clipboard");
+		Logger.info("Start Listening clipboard");
 		while (true) {
 			String content = helper.getCliboarContent();
 			boolean handled = messageHandler.handle(content, id);

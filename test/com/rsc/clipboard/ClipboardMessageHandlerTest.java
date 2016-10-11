@@ -15,9 +15,10 @@ public class ClipboardMessageHandlerTest {
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
+		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_START + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(null, null, null, sender, parser);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(null, null, null, sender, parser, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(sender).acceptTansmision(anyString());
@@ -30,9 +31,10 @@ public class ClipboardMessageHandlerTest {
 		ClipboradHelper helper = mock(ClipboradHelper.class);
 		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
 		ClipboardParser parser = new ClipboardParser();
+		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_ACK + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, null, null, parser);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, null, null, parser, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(fileSender).prepareFilePart(anyString());
@@ -48,9 +50,10 @@ public class ClipboardMessageHandlerTest {
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
+		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_PART + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(fileReader).addPart(anyString());
@@ -65,9 +68,10 @@ public class ClipboardMessageHandlerTest {
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
+		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_PART_END + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(fileReader).createFile();
@@ -83,9 +87,10 @@ public class ClipboardMessageHandlerTest {
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
-
+		HashGenerator generator = new HashGenerator();
+		
 		String content = "";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		assertFalse(handled);
@@ -95,8 +100,9 @@ public class ClipboardMessageHandlerTest {
 	public void startSendingTest() {
 		ClipboradHelper helper = mock(ClipboradHelper.class);
 		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
+		HashGenerator generator = new HashGenerator();
 		
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, null, null, null);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, null, null, null, generator);
 		boolean start = handler.startSending("AA");
 		
 		assertTrue(start);
@@ -105,8 +111,9 @@ public class ClipboardMessageHandlerTest {
 	@Test
 	public void startSendingTest2() {
 		ClipboradHelper helper = mock(ClipboradHelper.class);
+		HashGenerator generator = new HashGenerator();
 		
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, null, null, null, null);
+		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, null, null, null, null, generator);
 		boolean start = handler.startSending("AA");
 		
 		assertFalse(start);
