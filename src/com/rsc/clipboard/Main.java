@@ -2,6 +2,10 @@ package com.rsc.clipboard;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 
+import com.rsc.clipboard.strategy.MessageHandlerStrategy;
+import com.rsc.clipboard.strategy.ReciverFileStrategy;
+import com.rsc.clipboard.strategy.SendFileStrategy;
+
 
 public class Main {
 
@@ -26,7 +30,10 @@ public class Main {
 //				BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("out"));
 //				fileReader = new ClipboardFileReader(bos);
 		
-		ClipboardMessageHandler messageHandler = new ClipboardMessageHandler(helper, cmd.getFileSender(), cmd.getFileReader(), sender, parser, generator);
+//		ClipboardMessageHandler messageHandler = new ClipboardMessageHandler(helper, cmd.getFileSender(), cmd.getFileReader(), sender, parser, generator);
+		MessageHandlerStrategy messageHandler = cmd.isSender() 
+				? new SendFileStrategy(parser, cmd.getFileSender(), helper) : 
+				  new ReciverFileStrategy(parser, sender, cmd.getFileReader(), generator);
 		ClipboardListener listener = new ClipboardListener(messageHandler, helper);
 		Thread thread =  new Thread(listener);
 		thread.run();

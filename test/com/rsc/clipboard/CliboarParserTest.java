@@ -66,36 +66,12 @@ public class CliboarParserTest {
 	}
 	
 	@Test
-	public void messageArrivedTest() {
-		String myId = "1111";
-		String remoteId = "2222";
-		String content = "Content";
-		String msg = ClipboardHeders.TRANSMISION_START + remoteId + "|" + content; 
-		ClipboardParser parser = new ClipboardParser();
-		boolean ret = parser.checkIfMessageArrived(msg, myId);
-		
-		assertTrue(ret);
-	}
-	
-	@Test
-	public void messageNotArrivedTest() {
-		String myId = "1111";
-		String remoteId = "2222";
-		String content = "Content";
-		String msg = fakeHeader + remoteId + "|" + content; 
-		ClipboardParser parser = new ClipboardParser();
-		boolean ret = parser.checkIfMessageArrived(msg, myId);
-		
-		assertFalse(ret);
-	}
-	
-	@Test
-	public void messageArrivedIgnoreOwmMessagesTest() {
+	public void messageAcceptIgnoreOwmMessagesTest() {
 		String myId = "1111";
 		String content = "Content";
-		String msg = ClipboardHeders.TRANSMISION_START + myId + "|" + content; 
+		String msg = ClipboardHeders.TRANSMISION_ACK + myId + "|" + content; 
 		ClipboardParser parser = new ClipboardParser();
-		boolean ret = parser.checkIfMessageArrived(msg, myId);
+		boolean ret = parser.checkIfMessageAccepted(msg, myId);
 		
 		assertFalse(ret);
 	}

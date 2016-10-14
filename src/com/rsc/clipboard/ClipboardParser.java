@@ -29,14 +29,6 @@ public class ClipboardParser {
 
 	}
 	
-	public boolean checkIfMessageArrived(String content, String id) {
-		if (content.startsWith(ClipboardHeders.TRANSMISION_START)) {
-			return diffId(content, id);
-		} else {
-			return false;
-		}
-	}
-	
 	public boolean checkIfMessageAccepted(String content, String id) {
 		if (content.startsWith(ClipboardHeders.TRANSMISION_ACK)) {
 			return diffId(content, id);

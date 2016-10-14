@@ -4,93 +4,69 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
+import com.rsc.clipboard.strategy.MessageHandlerStrategy;
+import com.rsc.clipboard.strategy.ReciverFileStrategy;
+import com.rsc.clipboard.strategy.SendFileStrategy;
+
 
 public class ClipboardMessageHandlerTest {
 
-	
-	@Test
-	public void messageArrivedTest() {
-		ClipboradHelper helper = mock(ClipboradHelper.class);
-		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
-		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
-		ClipboardSender sender = mock(ClipboardSender.class);
-		ClipboardParser parser = new ClipboardParser();
-		HashGenerator generator = new HashGenerator();
-		
-		String content = ClipboardHeders.TRANSMISION_START + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(null, null, null, sender, parser, generator);
-		boolean handled = handler.handle(content, "AA");
-		
-		verify(sender).acceptTansmision(anyString());
-		assertTrue(handled);
-		assertFalse(handler.isStandBy());
-	}
 	
 	@Test
 	public void messageAcceptedTest() {
 		ClipboradHelper helper = mock(ClipboradHelper.class);
 		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
 		ClipboardParser parser = new ClipboardParser();
-		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_ACK + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, null, null, parser, generator);
+		MessageHandlerStrategy handler = new SendFileStrategy(parser, fileSender, helper);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(fileSender).prepareFilePart(anyString());
 		assertTrue(handled);
-		assertFalse(handler.isStandBy());
 	}
 
 	
 	@Test
 	public void messageFileArrivedTest() {
-		ClipboradHelper helper = mock(ClipboradHelper.class);
-		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
 		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_PART + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser, generator);
+		MessageHandlerStrategy handler = new ReciverFileStrategy(parser, sender, fileReader, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(fileReader).addPart(anyString());
 		assertTrue(handled);
-		assertFalse(handler.isStandBy());
 	}
 	
 	@Test
 	public void messageEndOfFileTest() {
-		ClipboradHelper helper = mock(ClipboradHelper.class);
-		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
 		HashGenerator generator = new HashGenerator();
 		
 		String content = ClipboardHeders.TRANSMISION_PART_END + "ID";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser, generator);
+		MessageHandlerStrategy handler = new ReciverFileStrategy(parser, sender, fileReader, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		verify(fileReader).createFile();
 		assertTrue(handled);
-		assertTrue(handler.isEndListening());
-		assertTrue(handler.isStandBy());
+		assertTrue(handler.isEnd());
 	}
 
 	@Test
 	public void messageNotHandledTest() {
-		ClipboradHelper helper = mock(ClipboradHelper.class);
-		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
 		ClipboardFileReader fileReader = mock(ClipboardFileReader.class);
 		ClipboardSender sender = mock(ClipboardSender.class);
 		ClipboardParser parser = new ClipboardParser();
 		HashGenerator generator = new HashGenerator();
 		
 		String content = "";
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, fileReader, sender, parser, generator);
+		MessageHandlerStrategy handler = new ReciverFileStrategy(parser, sender, fileReader, generator);
 		boolean handled = handler.handle(content, "AA");
 		
 		assertFalse(handled);
@@ -98,24 +74,13 @@ public class ClipboardMessageHandlerTest {
 	
 	@Test
 	public void startSendingTest() {
+		ClipboardParser parser = new ClipboardParser();
 		ClipboradHelper helper = mock(ClipboradHelper.class);
 		ClipboardFileSender fileSender = mock(ClipboardFileSender.class);
-		HashGenerator generator = new HashGenerator();
 		
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, fileSender, null, null, null, generator);
-		boolean start = handler.startSending("AA");
+		MessageHandlerStrategy handler = new SendFileStrategy(parser, fileSender, helper);
+		boolean handled = handler.handle("", "");
 		
-		assertTrue(start);
-	}
-	
-	@Test
-	public void startSendingTest2() {
-		ClipboradHelper helper = mock(ClipboradHelper.class);
-		HashGenerator generator = new HashGenerator();
-		
-		ClipboardMessageHandler handler = new ClipboardMessageHandler(helper, null, null, null, null, generator);
-		boolean start = handler.startSending("AA");
-		
-		assertFalse(start);
+		assertTrue(handled);
 	}
 }

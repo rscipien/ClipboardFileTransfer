@@ -12,6 +12,7 @@ public class CommandLineParams {
 	private String[] args;
 	private FileUtil fileUtil;
 	private boolean dump = false;
+	private boolean isSender = false;
 	
 	public CommandLineParams(String[] args, FileUtil fileUtil) {
 		this.args = args;
@@ -55,6 +56,7 @@ public class CommandLineParams {
 				BufferedInputStream bis = fileUtil.prepareBufferedInputStream(file);
 				Base64Part base64Part = new Base64Part(bis, 1024*50, fileUtil); 
 				fileSender = new ClipboardFileSender(base64Part, new HashGenerator());
+				isSender = true;
 			}
 		}
 	}
@@ -69,4 +71,13 @@ public class CommandLineParams {
 	public boolean isDump() {
 		return dump;
 	}
+
+	public boolean isSender() {
+		return isSender;
+	}
+
+	public void setSender(boolean isSender) {
+		this.isSender = isSender;
+	}
+	
 }
